@@ -1,0 +1,30 @@
+Making of newsletter with the help of AI and MCP.
+Step1: The structure
+Step2: Defining the process: Research ---> Editing---> Designing.
+Step3: Defining the tool:
+
+
+The main AI.                               The tools
+                        MCP
+                  
+Claude Desktop                          Github WebSearch Gdrive Arxiv Gmail ProductHunt
+
+
+Step4: The Research Phase:
+
+Claude--->{Content Ideas
+        Performance Data -------->Insights----> Web search
+        Email Feedback                          GitHub
+         }                                      Product Hunt------> My Desktop
+                                                Arxiv
+                                                  X
+
+Step5: The Editing Phase:
+
+Claude----> My desktop(all 5 research)------> Draft--->Save---> My desktop
+               Sample/demo newsletter
+
+Step6: The Designing Phase:
+
+Claude---> Final draft-----> HTML page----> My desktop
+            Design specs
