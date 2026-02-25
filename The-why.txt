@@ -1,0 +1,59 @@
+The arrival of LLM:
+Mode change from transactional to transformational.
+
+The problem of fragmentation:
+We have different AI worlds.
+
+Vision: Unified AI agent.
+Challenge: The problem of context.
+
+What is context?
+Knowledge /Information + Memory  avaliable to the agent.
+
+What is the problem?
+Context is scattered.----> lead to copy-paste hell.
+
+The solution: Function calling.
+OpenAI introduced function calling.
+
+Function calling is a mechanism that allows an AI agent to call functions in order to perform a task.
+
+LLM -------> tool1---> weather api
+            tool2---> news api
+            tool3---> databases
+            tool4---> file system
+
+====> The implication of function calling--->tools----> integration become easy.
+
+====> The implication of integration--->context become easy.
+
+====> The implication of context--->agent become easy.
+
+====> The implication of agent--->unified AI agent.
+
+The new scenario:
+Context assembly problem has been solved.
+
+Problem with tools:
+
+1.Integration problem.
+
+N chatbot.   m software====> n*m integration.
+
+since,
+different authentication methods
+different data formats and api patterns
+different data access methods
+different data storage methods
+different error handling.
+
+2. Maintenance problem.
+
+3. Security fragmentation.
+
+4. Cost and time wastage.
+
+
+
+
+
