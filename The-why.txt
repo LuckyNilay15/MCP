@@ -53,7 +53,54 @@ different error handling.
 
 4. Cost and time wastage.
 
+Overview of the problem:
 
+Every AI tool was buidling its own way to call every API.
 
+The solution:
 
+The source build a tool which can be integrated by any AI tool.
 
+MCP Client SDK              MCP Server SDK
+
+##MCP Vs Function/Tool Calling:
+
+1.General Function Flow:
+
+Client :
+function_call to call server take response and process it and display to end user.
+The function called is the function of the server which takes input queries the db 
+take out relevant data and return it to the client.
+
+2. Now just server code written in a way so that logic is same
+and the configuration is passed to the client SDK 
+Now client SDK will call the server SDK and get the response.
+
+result=call_tool("tool_name",input)
+
+So, here Server does the heavy lifting.
+
+Lets say Github server:
+Authentication with github
+API rate limiting
+Data format translation
+Error handling
+Github specific business-logic.
+
+Client just has to connect to the server.
+
+Benefits:
+
+N Client + M Server===> M + N integration instead of M*N integration.
+All the logic writting part has been delegated to the server instead of client.
+No maintenance overhead.
+Reduced cost and time.
+Better Security.
+
+***Note: In the configuration, we can define the authentication method, data format, api pattern, etc for the particular tool(thats it).
+
+Now to manage this single file is much easier than n files.
+
+MCP Ecosystem:
+More AI chatbot supporting MCP > more valuable for servers to build MCP servers.
+More MCP servers available -> more tools available for AI chatbots.
