@@ -1,0 +1,168 @@
+Simplified Architecture:
+
+         LLM
+   (chatgpt, gemini, anthropic, claude, etc)      
+          |
+          |
+User---->Host------------->         Server
+                              (Github slack gdrive)
+
+
+Let say user ask if there is any new repo available in github.
+Now this query go to Host now host will call the LLM for answer and LLM will notice that it
+do not have this answer in its training data so it will call the github api and get the response and send it to the user.
+That is the basic architecture of MCP.
+
+Now some Deep dive into host.
+
+
+Host (client) ------------> server
+     (client)-------------> server
+     (client)-------------> server
+
+Host directly do not communicate with server.Rather it does it using client which forms a one to one relationship
+with the server.
+
+Real Life analogy
+
+Host---> phone
+Client---> SIM card
+Server---> Network
+
+Now to connect with different networks like jio airtel etc we need to insert its sim card.
+
+The sim card is the client and the network is the server. Sim card acts as a bridge between phone and network.
+
+Similary, when we query our request the client will connect to the server. Before connecting it will convert the request into a format that the server can understand.
+And this format follows the MCP protocol. client will convert the query into MCP format and server will responds in the same 
+Now response again reach the client and client will convert it into a format that the user can understand.
+That is the deep dive into the host.
+
+Benefits:
+
+1. Decoupling of client and server.
+----> Safety
+-----> Parallelism (each client independently connect to the respective server).
+2. Scalability
+Just add one more client and we have a new client server connection. Thats it.
+
+#Primitives: Things that the server offer to the client.
+----> Tools, resources,prompts.
+
+Tools: Actions the AI asks the server to perform.(dynamic)
+
+Resources: Structured data sources the AI can read.(static)
+
+Prompts: Predefined prompts the server offer to help shape AI behaviour.
+
+For example we have to create an issue related to login. The issue is that upon clicking login button nothing happens.
+So the host will wrtite like title: login issue, description: upon clicking login button nothing happens.
+Now this msg is vague and it do not tell server about the exact structured res that the res should look like. So,
+at the server side we do prompts like {
+    name:
+    description:
+    message:
+    content:
+
+}
+Now, res is according to content and this structure is fetched using the description and respective name. Thats it!
+
+Primitives: standard operations.
+
+Tools:
+tools/list
+tools/call
+
+Resources:
+resources/list
+resources/read
+resources/subscribe/unsubscribe
+
+Prompts:
+prompts/list
+prompts/get
+
+
+MCP Data layer:
+The language and grammar of  MCP layer that everyone agree to follow.
+JSON RPC 2.0 is the foundation layer for MCP.
+
+JSON-RPC-> Javascript object notation remote procedure call---> distributed computing protocol.
+
+Req structure:                    
+{   
+    jsonrpc: "2.0",          
+    method: "subtract",
+    params: [42, 23],
+    id: 1
+}
+
+Res structure:
+{
+    jsonrpc: "2.0",
+    result: 19,
+    id: 1
+}
+
+Req:
+{
+    jsonrpc: "2.0",
+    method:tools/list,
+    params: [],
+    id: 1
+}
+res:
+{
+    jsonrpc: "2.0",
+    result: {
+        tools:[
+        name:github/listissues.. description: list all issues
+        name:github/createissue.. description: create new issue
+        name:github/editeissue.. description: edit issue
+        name:github/deleteissue.. description: delete issue
+        ...
+        ]
+    },
+    id: 1
+}
+
+##Batching:
+
+Calling of multiple requests at once.
+
+[
+    {
+
+    },
+    {
+
+    }
+    ...
+]
+
+##Notification(fire and forget):  ---> to the one who subscribed.---> No id required since no vice versa response required.   
+
+Notification(server to client)
+Notification(client to server)
+
+##Error handling:
+
+Q. Why JSON RPC 2.0 for MCP?
+
+Its lightweight
+Supports bi-directional communication.
+It is transport agnostic.
+Support batching.
+Support notifications.
+
+JSON RPC 2.0 is a distributed computing protocol that allows for remote procedure calls between different systems.
+
+
+
+
+
+
+
+
+
+
