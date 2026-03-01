@@ -157,10 +157,48 @@ Support notifications.
 
 JSON RPC 2.0 is a distributed computing protocol that allows for remote procedure calls between different systems.
 
+#MCP Transport layer:
 
+It is the mechanism that alllows JSON RPC messages to be sent and received between client and server.
+The choice of transport depend on the type of server.
 
+TYpes of server:
 
+MCP Servers:
+1. Remote
+Mode of Transport: HTTP/SSE
+2. Local
+Mpde of Transport->STDIO
 
+1. Local Server-> STDIO
+
+--->stdin
+--->stdout
+
+In MCP , these streams are used as transport layer btw client and server.
+STDIO Working:
+host starts a subprocess---> Host(client) put msg into server stdio---> the server process it and write the msg back to its stdout.
+
+Benefits:
+1. Simple
+2. Fast
+3. Reliable
+4. Secure
+5. Platform independent
+
+Using HTTP allows the host to reach anywhere in the world.
+It is a poet req where we send JSON RPC req as JSON payload.
+It supports standard HTTP auth like api keys etc.
+
+SSE--> Server sent events--> An extension of HTTP.
+sends multiple msg to client over a single open connection.
+Instead of sending one large blob, the server can stream chunks of data to the client as they are ready.
+Ideal for long running tasks or incremental updates.
+
+JSON-RPC is transport agnostic.
+Clear sepration between data and transport layer.
+
+ 
 
 
 
