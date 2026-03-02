@@ -1,0 +1,143 @@
+Complete sequence of steps in between a session--> continuous coneection btw host(client) and server from starting
+to using to ending a connection.
+
+1. Initialisation
+2. Operation
+3. Shut down
+
+A) Initialisation phase:
+Must be first interaction between client and server.
+establish protocol version compatibility.
+Exchange and negotiate compatibility.
+
+Initialisation step1:
+
+Client send initialise req to server.
+{
+    method: initialise
+    params: []
+    id: 1
+    ...
+}
+
+step2:
+Server send initialise res to client.
+
+Step3:
+initialization notification by client to server.---> initialized notification.
+
+Now, the client and server are connected.
+
+Important Note:
+
+The client should not send request other than pings before the server has reponded.
+Similary, server should not send request other than pings and logging before the client has sent initialization notification.
+
+B)#Version Negotiation:
+
+This situation is for the mismatching of the protocol version. Basically there are supported protocol versions in the config of client and if matching then connection is established.
+If the protocol version is not compatible then error msg is sent and connection cannot be established.
+
+C)#Capability Negotiation:
+
+Client and server share the capabilities feature of each other.
+Client:
+roots--> the info about the directory at the system
+sampling-> Server can access the AI capabilities of the client.
+elicitation-> any missing info asked by server to client . eg missing API key to access github by server.
+
+Server:
+tools
+resources
+prompts
+logging
+
+*Sub capabilities:
+listchanged-> list of tools/resources/prompts that have been changed.
+subscribe-> subscribe to the listchanged.
+
+D)#Operation phase:
+
+Here acc to negotiated capabilities, the client and server can exchange requests and responses.
+Client:
+----> Capability Discovery---> call tools/list.----> automarically done.
+----> propmts/list
+----> resources/list
+
+Auto triggered just after initialization notification.
+
+E) #Tool calling:
+
+Client can call the tools acc to the negotiated capabilities by listing down the exact tool name with parameters etc.
+and server respond accordingly.
+
+F) Shutdown Phase:
+One side(typically client) initiates the shutdown.
+No special JSON RPC message is defined.
+Transport layer is responsible for signalling termination.--->(local and remote).
+
+A> Shutdown in STDIO(local):
+
+Client initiated shutdown(shutdown):
+--> close input stream to the child process(server).
+--> wait for server to exit.
+--> send sigterm if server does not exit in time.
+--> send sigkill if still unresponsive.
+
+Server initiated shutdown(may):
+
+--> Close output stream to the child process(server).
+--> Exit process.
+
+B> Shutdown in HTTP(remote):
+
+Client  initialised shutdown(commoncase):
+The client(host) closes the HTTP connection it opened to the server.
+
+Server in initialised shutdown(maybe):
+The server closes the HTTP connection it opened to the client.
+The client should be prepared for a dropped connection and should handle it gracefully.---> terminate running process or reconnect if appropriate.
+
+#Special cases:
+
+1) Ping:
+It is a lightweight req res method defined in mcp.
+It is used to check the health of the connection.
+
+When to use ping:
+1. It is used to check if other side is up before full initialization.
+2. If there is no exchange btw two sides for a certain period of time.Then ping can be sent in order to check if the connection is still alive and keep it alive
+from the silent dropping by the OS, proxies or firewalls.
+
+2) Error Handling:
+It is how the client and server handle something went wrong with the request.
+It inherit JSON RPC error handling standard error handling format.
+
+Causes of error:
+1. Unsupported or mismatched.
+2. protocol version mismatch.
+3. timeout.
+4. internal server failure.
+etc etc.
+
+#Error object structure:
+
+code, message, data
+
+#Timeout:
+
+Ensure req do not hang for too long.
+
+SDKs let client to set timeout.
+if deadline passes with no result then client triggers a timeout.
+Client sends a cancellation req to server to stop.
+The server should stop processing and should not respond.
+
+#Progress Notification:
+Let the client know that a long-running process is in progress.
+client include a progress token in the meta data of the request.
+
+
+
+
+
