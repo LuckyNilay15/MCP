@@ -1,0 +1,63 @@
+How to connect MCP server to claude desktop?
+
+We will understand how to connect MCP server to client.
+
+Strategy:
+1. We will use claude Destop (ready made client) to connect with ready made MCP server(GDrive server).
+2. We will use claude Destop (ready made client) to connect with custom made MCP server.
+3. We will use custom made client to connect with custom made MCP server.
+
+Type of connections:
+
+1. Using config file: We list down all the details of our MCP server in the config file of the client host.
+2. Using connectors: We use connectors to connect the client and server.
+
+2. Using connectors:
+
+The connector is a built-in feature of the MCP client which is used to connect to the server automatically
+without any manual intervention of writing the config file or JSON object etc.
+
+No need to run server, edit JSON or worry about transport.
+It wraps up the MCP server and provide authentication via the OAuth(sign-in with google, github etc).
+This keeps things easy, safe and consistent.
+
+Analogy: App store for the MCP server.
+
+Why not use connectors always?
+1. MCP are curated abd managed.
+2. MCP is an open standard.
+
+1. Local:
+Client -> claude desktop
+Server -> File System Server
+Using connector.
+
+2. Local:
+
+Manim---> used by 3blue1brown.
+
+Manim MCP Server---> for animation code and generates a video.
+
+3. Remote:
+
+GDrive MCP Server---> for files stored in GDrive.--->(read only MCP server).
+Using connector.
+
+4. Local:
+
+Twitter MCP Server---> for files stored in Twitter.
+Using config file.
+npx---> run local server.
+API key
+Api access key
+token key
+token access key
+
+5. Remote:
+
+Weather MCP Server---> for files stored in Weather.
+uvx---> run remote github server.
+
+
+Awesome mcp servers.
+
