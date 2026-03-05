@@ -1,0 +1,45 @@
+Expense tracker MCP server:
+
+1. mcp.server---> build server
+2. mcp.client---> build client
+3. mcp.cli---> build cli for debugging/testing
+
+---> pip istall mcp[cli]
+
+mcp sdk---> abstraction---> fastmcp.
+
+mcp.server.fastmcp
+
+Note: wsgi---> web server gateway interface
+It helps with the communication between the web server and the python application.
+It was complex so flask came as a wrapper around wsgi to build python servers.
+
+It has a connection with fastapi.
+
+uv faster than pip.
+
+Features:
+
+1. Add expense
+2. List expense
+3. summarize
+
+Additional:
+4. edit expense
+5. delete expense
+6. credit expense
+
+Database: expenses
+sqlite
+
+
+Fastapi and fastmcp has similar features and philosophy.
+So, fastmcp is very much compatible with fastapi app and vice versa.
+
+mcp=FASTMCP.from_fastapi(
+    app=app,
+    name="expense_tracker",
+    description="Expense tracker MCP server",
+    version="0.0.1",
+)
+
